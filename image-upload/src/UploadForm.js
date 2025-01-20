@@ -1,75 +1,48 @@
-import React, { useState } from "react";
-import "./UploadForm.css";
+import axios from 'axios';
+import React, { useState } from 'react';
 
-const UploadForm = () => {
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const [error, setError] = useState("");
+const FileUpload = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [responseMessage, setResponseMessage] = useState('');
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-      setError(""); // Clear any previous errors
-    }
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!file) {
-      setError("Please select an image.");
+  const handleSubmit = async () => {
+    if (!selectedFile) {
+      alert('Please select a file to upload.');
       return;
     }
 
-    setLoading(true);
+    // Create a FormData object to send the file
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append('file', selectedFile);
 
     try {
-      const response = await fetch("/upload", {
-        method: "POST",
-        body: formData,
+      // Make a POST request to your API Gateway (which triggers Lambda)
+      const response = await axios.post('https://your-api-gateway-url', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      const result = await response.json();
-      if (result.imageUrl) {
-        setImageUrl(result.imageUrl); // Set the CloudFront URL for the uploaded image
-      } else {
-        setError("Failed to upload the image.");
-      }
-    } catch (err) {
-      setError("Error occurred during upload.");
-    } finally {
-      setLoading(false);
+      // Handle the response from Lambda
+      setResponseMessage(response.data.message);
+      console.log('Lambda response:', response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setResponseMessage('Error uploading file.');
     }
   };
 
   return (
-    <div className="upload-container">
-      <h1>Upload an Image</h1>
-      <form onSubmit={handleSubmit} className="upload-form">
-        <input
-          type="file"
-          id="fileInput"
-          accept="image/*"
-          onChange={handleFileChange}
-          disabled={loading}
-        />
-        {error && <p className="error">{error}</p>}
-        <button type="submit" disabled={loading}>
-          {loading ? "Uploading..." : "Upload"}
-        </button>
-      </form>
-
-      {imageUrl && (
-        <div className="image-preview">
-          <h2>Uploaded Image</h2>
-          <img src={imageUrl} alt="Uploaded" />
-        </div>
-      )}
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleSubmit}>Upload</button>
+      <div>{responseMessage}</div>
     </div>
   );
 };
 
-export default UploadForm;
+export default FileUpload;

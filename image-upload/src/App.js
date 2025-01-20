@@ -1,11 +1,11 @@
 import React from "react";
-import UploadForm from "./UploadForm";
 import "./App.css";
+import FileUpload from "./UploadForm";
 
 function App() {
   return (
     <div className="App">
-      <UploadForm />
+      <FileUpload />
     </div>
   );
 }
