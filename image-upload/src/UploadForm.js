@@ -6,12 +6,14 @@ const UploadForm = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
+  const [apiResponse, setApiResponse] = useState(""); // Store API text response
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
       setError(""); // Clear any previous errors
+      setApiResponse(""); // Clear previous response
     }
   };
 
@@ -21,11 +23,11 @@ const UploadForm = () => {
       setError("Please select an image.");
       return;
     }
-  
+
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-  
+
     try {
       const response = await fetch(
         "https://3vd10i2cz5.execute-api.us-east-1.amazonaws.com/dev/",
@@ -33,23 +35,19 @@ const UploadForm = () => {
           method: "POST",
           body: formData,
           headers: {
-            Accept: "application/json", // Expect JSON response
+            Accept: "text/plain", // Ensure the API returns text
           },
         }
       );
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      const result = await response.json();
+
+      const result = await response.text(); // Read response as plain text
       console.log("Lambda Response:", result);
-  
-      if (result.imageUrl) {
-        setImageUrl(result.imageUrl); // Update UI with uploaded image URL
-      } else {
-        setError("Failed to upload the image.");
-      }
+      setApiResponse(result); // Display API response on the UI
+
     } catch (err) {
       setError(`Error: ${err.message}`);
     } finally {
@@ -74,6 +72,15 @@ const UploadForm = () => {
         </button>
       </form>
 
+      {/* Display API Response */}
+      {apiResponse && (
+        <div className="api-response">
+          <h2>API Response:</h2>
+          <p>{apiResponse}</p>
+        </div>
+      )}
+
+      {/* Display Image (If API returns an image URL) */}
       {imageUrl && (
         <div className="image-preview">
           <h2>Uploaded Image</h2>
