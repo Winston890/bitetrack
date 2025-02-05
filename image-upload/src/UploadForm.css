@@ -1,74 +1,85 @@
 .upload-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f4f4f9;
-    font-family: Arial, sans-serif;
-  }
-  
-  .upload-container h1 {
-    color: #4b4b4b;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the top */
+  padding: 20px; /* Add padding for spacing */
+  background-color: #f4f4f9;
+  font-family: Arial, sans-serif;
+  min-height: 100vh; /* Ensure the container covers the full viewport height */
+}
+
+.upload-container h1 {
+  color: #4b4b4b;
+  margin-bottom: 20px; /* Add spacing below the heading */
+}
+
+.upload-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px; /* Limit form width */
+}
+
+.upload-form input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.upload-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.upload-form button:disabled {
+  background-color: #bbb;
+  cursor: not-allowed;
+}
+
+.upload-container .error {
+  color: #d9534f;
+  margin-top: 10px; /* Add spacing above the error message */
+}
+
+.image-preview {
+  margin-top: 30px;
+  text-align: center;
+  max-height: 400px; /* Limit the height of the image preview */
+  overflow-y: auto; /* Add scroll if the image is too tall */
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 300px; /* Limit the height of the image */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.api-response {
+  margin-top: 20px; /* Add spacing above the API response */
+  text-align: center;
+}
+
+@media (max-width: 600px) {
   .upload-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    padding: 15px;
   }
-  
-  .upload-form input {
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    width: 300px;
+  .upload-form input, .upload-form button {
+    width: 100%;
   }
-  
-  .upload-form button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .upload-form button:disabled {
-    background-color: #bbb;
-    cursor: not-allowed;
-  }
-  
-  .upload-container .error {
-    color: #d9534f;
-  }
-  
-  .image-preview {
-    margin-top: 30px;
-    text-align: center;
-  }
-  
-  .image-preview img {
-    max-width: 100%;
-    max-height: 300px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  @media (max-width: 600px) {
-    .upload-form {
-      width: 100%;
-      padding: 15px;
-    }
-    .upload-form input, .upload-form button {
-      width: 90%;
-    }
-  }
-  
+}

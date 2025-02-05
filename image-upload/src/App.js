@@ -1,11 +1,13 @@
 import React from "react";
+import UploadForm from "./UploadForm";
+import Landing from "./Landing";
 import "./App.css";
-import FileUpload from "./UploadForm";
 
 function App() {
   return (
     <div className="App">
-      <FileUpload />
+      <Landing />
+      <UploadForm />
     </div>
   );
 }

@@ -1,0 +1,5 @@
+.logo {
+    border-radius: 15px; /* Adjust the value to control the roundness */
+    max-width: 150px;
+    height: auto;
+  }

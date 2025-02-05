@@ -1,0 +1,35 @@
+.landing-container {
+    display: flex; /* Use Flexbox */
+    align-items: center; /* Vertically center align items */
+    justify-content: space-between; /* Space out left and right sections */
+    padding: 20px; /* Add some padding */
+  }
+  
+  .landing-left-container {
+    flex: 1; /* Take up available space */
+    max-width: 50%; /* Limit width to half the screen */
+    padding-right: 20px; /* Add spacing between text and image */
+  }
+  
+  .company-mission-container {
+    margin-top: 20px; /* Add spacing below the logo */
+  }
+  
+  .mission-image {
+    border-radius: 15px; /* Rounded edges */
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 20px; /* Add spacing above the image */
+  }
+  
+  .example-image-container {
+    flex: 1; /* Take up available space */
+    max-width: 50%; /* Limit width to half the screen */
+    text-align: right; /* Align the image to the right */
+  }
+  
+  .example-image {
+    border-radius: 15px; /* Rounded edges */
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+  }

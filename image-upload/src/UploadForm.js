@@ -12,6 +12,7 @@ const UploadForm = () => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
+      setImageUrl(URL.createObjectURL(selectedFile)); // Generate and set image URL
       setError(""); // Clear any previous errors
       setApiResponse(""); // Clear previous response
     }
@@ -75,12 +76,12 @@ const UploadForm = () => {
       {/* Display API Response */}
       {apiResponse && (
         <div className="api-response">
-          <h2>API Response:</h2>
+          <h2>Calories:</h2>
           <p>{apiResponse}</p>
         </div>
       )}
 
-      {/* Display Image (If API returns an image URL) */}
+      {/* Display Image */}
       {imageUrl && (
         <div className="image-preview">
           <h2>Uploaded Image</h2>
