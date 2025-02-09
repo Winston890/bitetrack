@@ -1,8 +1,16 @@
 .landing-container {
-    display: flex; /* Use Flexbox */
-    align-items: center; /* Vertically center align items */
-    justify-content: space-between; /* Space out left and right sections */
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center align items horizontally */
     padding: 20px; /* Add some padding */
+  }
+  
+  .landing-top-container {
+    display: flex;
+    justify-content: space-between; /* Space out left and right sections */
+    width: 100%; /* Take full width */
+    max-width: 1200px; /* Limit maximum width */
+    margin-bottom: 40px; /* Add space between top content and UploadForm */
   }
   
   .landing-left-container {
@@ -22,7 +30,7 @@
     margin-top: 20px; /* Add spacing above the image */
   }
   
-  .example-image-container {
+  .landing-right-container {
     flex: 1; /* Take up available space */
     max-width: 50%; /* Limit width to half the screen */
     text-align: right; /* Align the image to the right */
@@ -32,4 +40,9 @@
     border-radius: 15px; /* Rounded edges */
     max-width: 100%; /* Ensure the image is responsive */
     height: auto; /* Maintain aspect ratio */
+  }
+  
+  .upload-form-container {
+    width: 100%; /* Take full width */
+    margin-top: 20px; /* Add space above the UploadForm */
   }
