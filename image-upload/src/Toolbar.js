@@ -1,16 +1,21 @@
-import React from "react";
+import React from "react"; 
 import { Link } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
-import "./Toolbar.css"; // Ensure this file exists for styling
+import HamburgerMenu from "./HamburgerMenu";
+import "./Toolbar.css"; 
 
 const Toolbar = ({ isLoggedIn, username, onLogout }) => {
-  const auth = useAuth(); // Get auth state from Cognito
-  
+  const auth = useAuth();
+
   return (
     <div className="toolbar">
       <div className="toolbar-left">
+        {/* Hamburger Menu */}
+        <HamburgerMenu isLoggedIn={isLoggedIn}/>
+        
         <Link to="/" className="logo">BiteTrack</Link>
       </div>
+
       <div className="toolbar-right">
         {isLoggedIn ? (
           <>

@@ -45,9 +45,11 @@ const UploadForm = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const result = await response.text(); // Read response as plain text
+      const result = await response.text(); 
+      const cleanedResult = result.replace(/^"(.*)"$/, '$1'); // Remove leading and trailing quotes
+      setApiResponse(cleanedResult);
       console.log("Lambda Response:", result);
-      setApiResponse(result); // Display API response on the UI
+      setError("");
 
     } catch (err) {
       setError(`Error: ${err.message}`);

@@ -1,0 +1,60 @@
+.hamburger-container {
+    position: relative; /* Ensure dropdown is positioned relative to this */
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Hamburger button */
+  .hamburger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .hamburger:hover {
+    opacity: 0.8;
+  }
+  
+  /* Dropdown menu starts hidden */
+  .hamburger-menu {
+    position: absolute;
+    top: 100%; /* Place right below the button */
+    left: 0; /* Align with the button */
+    background-color: #34495e; /* Darker blue */
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 10px; /* Space between links */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  }
+  
+  /* Show the menu when open */
+  .hamburger-menu.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  /* Links inside the dropdown */
+  .hamburger-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block; /* Ensures full-width clickable */
+    white-space: nowrap; /* Prevents text wrapping */
+  }
+  
+  .hamburger-menu a:hover {
+    background-color: #2c3e50;
+    border-radius: 5px;
+  }
+  

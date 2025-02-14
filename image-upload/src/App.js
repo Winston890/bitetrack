@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useAuth } from "react-oidc-context";
 import Toolbar from "./Toolbar";
 import Landing from "./Landing";
+import UploadForm from "./UploadForm";
+import History from "./History";
+import ProtectedRoute from "./ProtectedRoute"; // Import the new component
 import "./App.css";
 
 function App() {
@@ -12,12 +15,18 @@ function App() {
     <Router>
       <div className="App">
         <Toolbar
-          isLoggedIn={auth.isAuthenticated} // Use auth context
+          isLoggedIn={auth.isAuthenticated} 
           username={auth.user?.profile["cognito:username"] || ""}
-          onLogout={() => auth.removeUser()} // Logout function
+          onLogout={() => auth.removeUser()}
         />
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/upload_food" element={<UploadForm />} />
+
+          {/* Protected History Route */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/history" element={<History />} />
+          </Route>
         </Routes>
       </div>
     </Router>
