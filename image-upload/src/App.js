@@ -22,10 +22,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/upload_food" element={<UploadForm />} />
-
+          <Route path="/history" element={<History />} />
+          
           {/* Protected History Route */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/history" element={<History />} />
           </Route>
         </Routes>
       </div>

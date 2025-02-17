@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useAuth } from "react-oidc-context";
 import "./HamburgerMenu.css";
 
 const HamburgerMenu = ({ isLoggedIn }) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const auth = useAuth()
   return (
     <div className="hamburger-container">
       {/* Toggle button */}
@@ -20,7 +21,7 @@ const HamburgerMenu = ({ isLoggedIn }) => {
         {isLoggedIn ? (
           <Link to="/history" onClick={() => setIsOpen(false)}>History</Link>
         ) : (
-          <span className="disabled-link">History</span>  
+            <Link to="/history" onClick={() => auth.signinRedirect()}>History</Link>
         )}
       </div>
     </div>
