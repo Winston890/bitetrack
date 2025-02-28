@@ -1,12 +1,18 @@
 import React, { useState } from "react";
+import {v4 as uuidv4} from 'uuid';
 import "./UploadForm.css";
+import { useAuth } from "react-oidc-context";
+import SaveHistoryButton from "./SaveHistoryButton";
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
-  const [apiResponse, setApiResponse] = useState(""); // Store API text response
+  const [uuid, setUuid] = useState("");
+  const [apiResponse, setApiResponse] = useState(""); 
+
+  const auth = useAuth();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -15,6 +21,7 @@ const UploadForm = () => {
       setImageUrl(URL.createObjectURL(selectedFile)); // Generate and set image URL
       setError(""); // Clear any previous errors
       setApiResponse(""); // Clear previous response
+      setUuid("");
     }
   };
 
@@ -48,8 +55,8 @@ const UploadForm = () => {
       const result = await response.text(); 
       const cleanedResult = result.replace(/^"(.*)"$/, '$1'); // Remove leading and trailing quotes
       setApiResponse(cleanedResult);
-      console.log("Lambda Response:", result);
       setError("");
+      setUuid(uuidv4());
 
     } catch (err) {
       setError(`Error: ${err.message}`);
@@ -82,6 +89,14 @@ const UploadForm = () => {
           <p>{apiResponse}</p>
         </div>
       )}
+
+      {uuid && (
+        auth.isAuthenticated ? (
+          <SaveHistoryButton uuid={uuid} />
+        ) : (
+          <p>Login to save history.</p>
+        )
+      )}  
 
       {/* Display Image */}
       {imageUrl && (
