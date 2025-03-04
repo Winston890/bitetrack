@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import "./UploadForm.css";
 import { useAuth } from "react-oidc-context";
 import SaveHistoryButton from "./SaveHistoryButton";
+import NutritionDetails from "./NutritionDetails";
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
@@ -10,7 +11,7 @@ const UploadForm = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
   const [uuid, setUuid] = useState("");
-  const [apiResponse, setApiResponse] = useState(""); 
+  const [nutritionData, setNutritionData] = useState(null); // Store parsed JSON response
 
   const auth = useAuth();
 
@@ -18,9 +19,9 @@ const UploadForm = () => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       setFile(selectedFile);
-      setImageUrl(URL.createObjectURL(selectedFile)); // Generate and set image URL
-      setError(""); // Clear any previous errors
-      setApiResponse(""); // Clear previous response
+      setImageUrl(URL.createObjectURL(selectedFile)); 
+      setError(""); 
+      setNutritionData(null); // Clear previous response
       setUuid("");
     }
   };
@@ -43,7 +44,7 @@ const UploadForm = () => {
           method: "POST",
           body: formData,
           headers: {
-            Accept: "text/plain", // Ensure the API returns text
+            Accept: "text/plain",
           },
         }
       );
@@ -52,14 +53,16 @@ const UploadForm = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const result = await response.text(); 
-      const cleanedResult = result.replace(/^"(.*)"$/, '$1'); // Remove leading and trailing quotes
-      setApiResponse(cleanedResult);
+      const result = await response.text();
+
+      // Attempt to parse JSON and store as structured data
+      const parsedData = JSON.parse(result);
+      setNutritionData(parsedData);
       setError("");
       setUuid(uuidv4());
-
     } catch (err) {
       setError(`Error: ${err.message}`);
+      setNutritionData(null);
     } finally {
       setLoading(false);
     }
@@ -78,27 +81,25 @@ const UploadForm = () => {
         />
         {error && <p className="error">{error}</p>}
         <button type="submit" disabled={loading}>
-          {loading ? "Uploading..." : "Upload"}
+          {loading ? "Analyzing..." : "Analyze"}
         </button>
       </form>
 
-      {/* Display API Response */}
-      {apiResponse && (
-        <div className="api-response">
-          <h2>Calories:</h2>
-          <p>{apiResponse}</p>
-        </div>
-      )}
+      {/* Display Nutrition Details instead of raw API response */}
+      {nutritionData && <NutritionDetails nutritionData={nutritionData} />}
 
       {uuid && (
         auth.isAuthenticated ? (
           <SaveHistoryButton uuid={uuid} />
         ) : (
-          <p>Login to save history.</p>
+          <div className="login-prompt">
+            <p><span>Login</span> to save your history.</p>
+            <button onClick={() => auth.signinRedirect()}>Login Now</button>
+          </div>
         )
-      )}  
+      )}
 
-      {/* Display Image */}
+
       {imageUrl && (
         <div className="image-preview">
           <h2>Uploaded Image</h2>
