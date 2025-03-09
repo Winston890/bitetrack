@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import "./UploadForm.css";
 import { useAuth } from "react-oidc-context";
 import SaveHistoryButton from "./SaveHistoryButton";
@@ -32,11 +31,11 @@ const UploadForm = () => {
       setError("Please select an image.");
       return;
     }
-
+  
     setLoading(true);
     const formData = new FormData();
     formData.append("file", file);
-
+  
     try {
       const response = await fetch(
         "https://3vd10i2cz5.execute-api.us-east-1.amazonaws.com/dev/",
@@ -44,22 +43,20 @@ const UploadForm = () => {
           method: "POST",
           body: formData,
           headers: {
-            Accept: "text/plain",
+            Accept: "application/json", // Ensure the API returns JSON
           },
         }
       );
-
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
-      const result = await response.text();
-
-      // Attempt to parse JSON and store as structured data
-      const parsedData = JSON.parse(result);
-      setNutritionData(parsedData);
+  
+      const result = await response.json(); 
+      console.log(result)
+      setNutritionData(result.nutrition || {})
+      setUuid(result.run_id || ""); 
       setError("");
-      setUuid(uuidv4());
     } catch (err) {
       setError(`Error: ${err.message}`);
       setNutritionData(null);
@@ -67,6 +64,7 @@ const UploadForm = () => {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="upload-container">

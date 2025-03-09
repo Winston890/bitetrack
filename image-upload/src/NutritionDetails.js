@@ -1,24 +1,27 @@
 import React from "react";
-import "./NutritionDetails.css"; // Add styling if needed
 
 const NutritionDetails = ({ nutritionData }) => {
+  if (!nutritionData) return null; // Don't render if no data
+
   return (
-    <div className="nutrition-details">
-      <h2>Nutrition Information</h2>
+    <div className="nutrition-table">
+      <h2>Nutrition Details</h2>
       <table>
         <thead>
           <tr>
-            <th>Category</th>
+            <th>Nutrient</th>
             <th>Amount</th>
           </tr>
         </thead>
         <tbody>
-          {Object.entries(nutritionData).map(([key, value]) => (
-            <tr key={key}>
-              <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
-              <td>{value}</td>
-            </tr>
-          ))}
+            {Object.entries(nutritionData).map(([key, value]) => (
+                <React.Fragment key={key}>
+                <tr>
+                    <td>{key.charAt(0).toUpperCase() + key.slice(1)}</td>
+                    <td>{value}</td>
+                </tr>
+                </React.Fragment>
+            ))}
         </tbody>
       </table>
     </div>
