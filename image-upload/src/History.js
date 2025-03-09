@@ -1,18 +1,9 @@
-import { useEffect } from "react";
 import { useAuth } from "react-oidc-context";
 
-const History = ({isLoggedIn}) => {
-    const auth = useAuth(); 
-    useEffect(() => {
-        if (!auth.isAuthenticated) {
-            auth.signinRedirect();
-        }
-    }, [auth.isAuthenticated]);
+const History = () => {
+    const auth = useAuth();
 
-    if (!auth.isAuthenticated) {
-        return <div>Redirecting...</div>; // Optional loading message
-    }
-    return <div>Testing Routes</div>
-}
+    return <div>Testing Routes</div>;
+};
 
 export default History;

@@ -1,14 +1,9 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "react-oidc-context";
+import React from "react";
+import { withAuthenticationRequired } from "react-oidc-context";
+import History from "./History"; // Import your History component
 
-const ProtectedRoute = () => {
-  const auth = useAuth();
-
-  if (!auth.isAuthenticated) {
-    return <Navigate to="/" replace />;
-  }
-
-  return <Outlet />;
-};
+const ProtectedRoute = withAuthenticationRequired(History, {
+  onRedirecting: () => <div>Redirecting to the login page...</div>,
+});
 
 export default ProtectedRoute;

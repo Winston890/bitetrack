@@ -17,16 +17,11 @@ function App() {
         <Toolbar
           isLoggedIn={auth.isAuthenticated} 
           username={auth.user?.profile["cognito:username"] || ""}
-          onLogout={() => auth.removeUser()}
         />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/upload_food" element={<UploadForm />} />
-          <Route path="/history" element={<History />} />
-          
-          {/* Protected History Route */}
-          <Route element={<ProtectedRoute />}>
-          </Route>
+          <Route path="/history" element={<ProtectedRoute />} />
         </Routes>
       </div>
     </Router>
