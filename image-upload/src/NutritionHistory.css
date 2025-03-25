@@ -1,0 +1,91 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .refresh-button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .refresh-button:hover {
+    color: #007bff;
+  }
+  
+
+  .no-history {
+    color: gray;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .nutrition-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .nutrition-table th,
+  .nutrition-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .nutrition-table th {
+    background-color: #f4f4f4;
+  }
+  
+  .calories {
+    font-weight: bold;
+    color: rgb(29, 29, 31);
+  }
+  
+  .protein {
+    color: green;
+  }
+  
+  .carbs {
+    color: orange;
+  }
+  
+  .fat {
+    color: red;
+  }
+  
