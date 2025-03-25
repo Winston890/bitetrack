@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./UploadForm.css";
 import { useAuth } from "react-oidc-context";
 import SaveHistoryButton from "./SaveHistoryButton";
@@ -13,6 +13,7 @@ const UploadForm = () => {
   const [nutritionData, setNutritionData] = useState(null); // Store parsed JSON response
 
   const auth = useAuth();
+  const nutritionRef = useRef();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -48,7 +49,10 @@ const UploadForm = () => {
         }
       );
   
-      if (!response.ok) {
+      if (response.status === 413) {
+        throw new Error("Image too large");
+      }
+      if (!response.ok) { // Any 200-299 OK
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   
@@ -57,6 +61,11 @@ const UploadForm = () => {
       setNutritionData(result.nutrition || {})
       setUuid(result.run_id || ""); 
       setError("");
+      setTimeout(() => {
+        if (nutritionRef.current) {
+          nutritionRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 300);
     } catch (err) {
       setError(`Error: ${err.message}`);
       setNutritionData(null);
@@ -83,8 +92,19 @@ const UploadForm = () => {
         </button>
       </form>
 
+      {imageUrl && (
+        <div className="image-preview">
+          <h2>Uploaded Image</h2>
+          <img src={imageUrl} alt="Uploaded" />
+        </div>
+      )}
+
       {/* Display Nutrition Details instead of raw API response */}
-      {nutritionData && <NutritionDetails nutritionData={nutritionData} />}
+      {nutritionData && (
+        <div ref={nutritionRef}>
+          <NutritionDetails nutritionData={nutritionData} />
+        </div>
+      )}
 
       {uuid && (
         auth.isAuthenticated ? (
@@ -95,14 +115,6 @@ const UploadForm = () => {
             <button onClick={() => auth.signinRedirect()}>Login Now</button>
           </div>
         )
-      )}
-
-
-      {imageUrl && (
-        <div className="image-preview">
-          <h2>Uploaded Image</h2>
-          <img src={imageUrl} alt="Uploaded" />
-        </div>
       )}
     </div>
   );

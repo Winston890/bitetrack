@@ -1,0 +1,35 @@
+.save-history-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .save-history-button {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .save-history-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .save-history-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  .save-history-message {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #28a745;
+    font-weight: bold;
+  }
+  

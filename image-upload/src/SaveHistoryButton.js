@@ -1,20 +1,27 @@
 import React, { useState } from "react";
+import { useAuth } from "react-oidc-context";
+import "./SaveHistoryButton.css";
+
 
 const SaveHistoryButton = ({ uuid }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const auth = useAuth();
 
   const handleSaveHistory = async () => {
     setLoading(true);
     setMessage("");
+    console.log(auth.user?.profile.sub)
+    console.log(auth.sub);
 
     try {
-      const response = await fetch("https://your-api-endpoint.com/save-history", {
+      console.log("WTF: ", JSON.stringify({ run_id: uuid, sub: auth.user?.profile.sub }));
+      const response = await fetch("https://3vd10i2cz5.execute-api.us-east-1.amazonaws.com/dev/calorie_run_details/save-image-analysis", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            Accept: "application/json",
         },
-        body: JSON.stringify({ uuid }),
+        body: JSON.stringify({ run_id: uuid, sub: auth.user?.profile.sub }),
       });
 
       if (!response.ok) {

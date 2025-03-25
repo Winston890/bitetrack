@@ -4,7 +4,7 @@ import { useAuth } from "react-oidc-context";
 import Toolbar from "./Toolbar";
 import Landing from "./Landing";
 import UploadForm from "./UploadForm";
-import History from "./History";
+import NutritionHistory from "./NutritionHistory";
 import ProtectedRoute from "./ProtectedRoute"; // Import the new component
 import "./App.css";
 
@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/upload_food" element={<UploadForm />} />
-          <Route path="/history" element={<ProtectedRoute />} />
+          <Route path="/history" element={<ProtectedRoute Component={NutritionHistory} />} />
         </Routes>
       </div>
     </Router>

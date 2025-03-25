@@ -1,9 +1,12 @@
 import React from "react";
 import { withAuthenticationRequired } from "react-oidc-context";
-import History from "./History"; // Import your History component
 
-const ProtectedRoute = withAuthenticationRequired(History, {
-  onRedirecting: () => <div>Redirecting to the login page...</div>,
-});
+const ProtectedRoute = ({ Component }) => {
+  const WrappedComponent = withAuthenticationRequired(Component, {
+    onRedirecting: () => <div>Redirecting to the login page...</div>,
+  });
+
+  return <WrappedComponent />;
+};
 
 export default ProtectedRoute;
